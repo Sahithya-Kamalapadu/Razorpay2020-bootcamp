@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"../db"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +14,11 @@ var addCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
+		_, err := db.CreateTask(task)
+		if err != nil {
+			fmt.Println("Something went wrong:", err)
+			return
+		}
 		fmt.Printf("Added \" %s \" in to the list \n", task)
 	},
 }
